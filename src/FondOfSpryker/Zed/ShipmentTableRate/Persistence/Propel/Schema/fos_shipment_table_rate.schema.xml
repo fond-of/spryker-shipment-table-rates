@@ -3,18 +3,18 @@
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="Orm\Zed\ShipmentTableRate\Persistence" package="src.Orm.Zed.ShipmentTableRate.Persistence">
 
-    <table name="fos_shipment_table_rate" idMethod="native" allowPkInsert="true" phpName="FondOfSprykerShipmentTableRate">
+    <table name="fos_shipment_table_rate" idMethod="native" allowPkInsert="true" phpName="FosShipmentTableRate">
         <column name="id_shipment_table_rate" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="free_threshold" required="false" type="DECIMAL" default="NULL"/>
+        <column name="free_threshold" required="false" type="INTEGER" default="NULL"/>
         <column name="price" required="true" type="DECIMAL"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
 
-        <foreign-key name="fos_shipment_table_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="FondOfSprykerShipmentTableRate">
+        <foreign-key name="fos_shipment_table_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="FosShipmentTableRate">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
 
-        <foreign-key name="fos_shipment_table_rate-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="FondOfSprykerShipmentTableRate">
+        <foreign-key name="fos_shipment_table_rate-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="FosShipmentTableRate">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
