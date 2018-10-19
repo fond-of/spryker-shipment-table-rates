@@ -9,5 +9,5 @@ This extension makes it possible to create and manage shipping table rates.
 ## Installation
 
 ```
-composer require fond-of-spryker/shipment-table-rates
+composer require fond-of-spryker/shipment-table-rate
 ```
