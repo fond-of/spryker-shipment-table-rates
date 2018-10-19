@@ -1,19 +1,21 @@
 <?php
 
-namespace FondOfSpryker\Zed\Shipment\Persistence;
+namespace FondOfSpryker\Zed\ShipmentTableRate\Persistence;
 
-use Orm\Zed\Shipment\Persistence\FondOfSprykerShipmentTableRateQuery;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer as SprykerShipmentQueryContainer;
+use FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainerInterface;
+use Orm\Zed\ShipmentTableRate\Persistence\FondOfSprykerShipmentTableRateQuery;
+use Orm\Zed\ShipmentTableRate\Persistence\FosShipmentTableRateQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method \Pyz\Zed\Shipment\Persistence\ShipmentPersistenceFactory getFactory()
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmenTableRatePersistenceFactory getFactory()
  */
-class ShipmentQueryContainer extends SprykerShipmentQueryContainer implements ShipmentQueryContainerInterface
+class ShipmentTableRateQueryContainer extends AbstractQueryContainer implements ShipmentTableRateQueryContainerInterface
 {
     /**
-     * @return \Orm\Zed\Shipment\Persistence\PyzShipmentTableRateQuery
+     * @return \Orm\Zed\ShipmentTableRate\Persistence\FondOfSprykerShipmentTableRateQuery
      */
-    public function queryTableRate(): FondOfSprykerShipmentTableRateQuery
+    public function queryTableRate(): FosShipmentTableRateQuery
     {
         return $this->getFactory()->createTableRateQuery();
     }

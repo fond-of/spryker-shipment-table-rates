@@ -2,13 +2,13 @@
 
 namespace FondOfSpryker\Zed\ShipmentTableRate\Persistence;
 
-use Orm\Zed\Shipment\Persistence\FondOfSprykerShipmentTableRateQuery;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface as SprykerShipmentQueryContainerInterface;
+use Orm\Zed\ShipmentTableRate\Persistence\FondOfSprykerShipmentTableRateQuery;
+use Orm\Zed\ShipmentTableRate\Persistence\FosShipmentTableRateQuery;
 
-interface ShipmentQueryContainerInterface extends SprykerShipmentQueryContainerInterface
+interface ShipmentTableRateQueryContainerInterface
 {
     /**
-     * @return \Orm\Zed\Shipment\Persistence\FondOfSprykerShipmentTableRateQuery
+     * @return \Orm\Zed\ShipmentTableRate\Persistence\FondOfSprykerShipmentTableRateQuery
      */
-    public function queryTableRate(): FondOfSprykerShipmentTableRateQuery;
+    public function queryTableRate(): FosShipmentTableRateQuery;
 }
