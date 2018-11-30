@@ -12,6 +12,8 @@ use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
 class TableRatePriceCalculationPlugin extends AbstractPlugin implements ShipmentMethodPricePluginInterface
 {
     /**
+     * Retrieve Shipment Price
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return integer
@@ -20,9 +22,10 @@ class TableRatePriceCalculationPlugin extends AbstractPlugin implements Shipment
     {
         return $this
             ->getFacade()
-            ->getPriceByCountryIso2CodeAndStoreName(
+            ->getShipmentPrice(
                 $quoteTransfer->getTotals()->getPriceToPay(),
                 $quoteTransfer->getShippingAddress()->getIso2Code(),
+                $quoteTransfer->getShippingAddress()->getZipCode(),
                 $quoteTransfer->getStore()->getName()
             );
     }

@@ -8,6 +8,7 @@
         <column name="free_threshold" required="false" type="INTEGER" defaultValue="NULL"/>
         <column name="price" required="true" type="INTEGER" defaultValue="0"/>
         <column name="fk_country" type="INTEGER" required="true"/>
+        <column name="zip_code" type="VARCHAR" size="255" required="false"/>
         <column name="fk_store" type="INTEGER" required="true"/>
 
         <foreign-key name="fos_shipment_table_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="FosShipmentTableRate">
