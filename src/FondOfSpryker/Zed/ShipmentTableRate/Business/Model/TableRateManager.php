@@ -7,6 +7,7 @@ use FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContai
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ShipmentTableRate\Persistence\FosShipmentTableRateQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
@@ -46,35 +47,63 @@ class TableRateManager
     }
 
     /**
+     * Retrieve price for the Shipment
      * @param float $price
      * @param string $countryIso2Code
      * @param string $storeName
      *
      * @return int
      */
-    public function getPriceByCountryIso2CodeAndStoreName(float $price, string $countryIso2Code, string $storeName): float
+    public function getShipmentPrice(float $price, string $countryIso2Code, string $zipCode, string $storeName): float
     {
         $countryId = $this->getCountryIdByIso2Code($countryIso2Code);
         $storeId   = $this->getStoreIdByName($storeName);
 
         try {
-            $shippingPrice = $this->shipmentTableRateQueryContainer
+
+            /** @var Orm\Zed\ShipmentTableRate\Persistence\FosShipmentTableRate $shippingPrice */
+            $shipmentRate = $this->shipmentTableRateQueryContainer
                 ->queryTableRate()
                 ->filterByFkCountry($countryId)
                 ->filterByFkStore($storeId)
+                ->filterByZipCode_In($this->getZipCodes($zipCode))
+                ->orderByZipCode(Criteria::DESC)
                 ->findOne();
 
-            if ($shippingPrice->getFreeThreshold() && $price >= $shippingPrice->getFreeThreshold()) {
+            if ($shipmentRate == null) {
+                $this->getLogger()->error('Cannot get shipping price', ['trace' => $e]);
+            }
+
+            if ($shipmentRate->getFreeThreshold() && $price >= $shipmentRate->getFreeThreshold()) {
                 return 0;
             }
 
-            return $shippingPrice->getPrice();
+            return $shipmentRate->getPrice();
 
         } catch (AmbiguousComparisonException $e) {
             $this->getLogger()->error('Cannot get shipping price', ['trace' => $e]);
         }
+    }
 
-        return null;
+    /**
+     * Retrieve zip codes
+     *
+     * @param string $zipCode
+     *
+     * @return string []
+     */
+    protected function getZipCodes(string $zipCode): array
+    {
+        $zipCodes = array();
+        array_push($zipCodes, $zipCode);
+
+        while($zipCode){
+            $zipCode = substr_replace($zipCode, '*', strlen($zipCode) - 1);
+            array_push($zipCodes, $zipCode);
+            $zipCode = substr($zipCode, 0, -1);
+        };
+
+        return $zipCodes;
     }
 
     /**
