@@ -8,12 +8,15 @@ use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ShipmentTableRate\Persistence\FosShipmentTableRateQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class TableRateManager
 {
+    use LoggerTrait;
+
     /**
      * @var \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainerInterface $shipmentTableRateQueryContainer
      */
@@ -71,7 +74,7 @@ class TableRateManager
                 ->findOne();
 
             if ($shipmentRate == null) {
-                $this->getLogger()->error('Cannot get shipping price', ['trace' => $e]);
+                throw new \Exception('Cannot get shipping price');
             }
 
             if ($shipmentRate->getFreeThreshold() && $price >= $shipmentRate->getFreeThreshold()) {
@@ -97,7 +100,7 @@ class TableRateManager
         $zipCodes = array();
         array_push($zipCodes, $zipCode);
 
-        while($zipCode){
+        while(strlen($zipCode)){
             $zipCode = substr_replace($zipCode, '*', strlen($zipCode) - 1);
             array_push($zipCodes, $zipCode);
             $zipCode = substr($zipCode, 0, -1);
