@@ -24,7 +24,7 @@
     "php": ">=7.1",
     "fond-of-spryker/shipment-table-rate-data-import": "dev-spryker_upgrade",
     "spryker/kernel": "^3.37.5",
-    "spryker/shipment": "^7.0.0"
+    "spryker/shipment": "^6.9.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.14.7",
