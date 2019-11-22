@@ -13,16 +13,16 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShipmentTableRateFacade extends AbstractFacade implements ShipmentTableRateFacadeInterface
 {
     /**
-     * Retrieve Shipment price
-     *
-     * @param float $price
+     * @param int $price
      * @param string $countryIso2Code
      * @param string $zipCode
      * @param string $storeName
      *
-     * @return float
+     * @return int
+     *
+     * @throws \Exception
      */
-    public function getShipmentPrice(float $price, string $countryIso2Code, string $zipCode, string $storeName): float
+    public function getShipmentPrice(int $price, string $countryIso2Code, string $zipCode, string $storeName): int
     {
         return $this->getFactory()
             ->createTableRateManager()

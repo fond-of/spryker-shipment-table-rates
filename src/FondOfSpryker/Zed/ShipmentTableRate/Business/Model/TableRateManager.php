@@ -50,14 +50,16 @@ class TableRateManager
     }
 
     /**
-     * Retrieve price for the Shipment
-     * @param float $price
+     * @param int $price
      * @param string $countryIso2Code
+     * @param string $zipCode
      * @param string $storeName
      *
      * @return int
+     *
+     * @throws \Exception
      */
-    public function getShipmentPrice(float $price, string $countryIso2Code, string $zipCode, string $storeName): float
+    public function getShipmentPrice(int $price, string $countryIso2Code, string $zipCode, string $storeName): int
     {
         $countryId = $this->getCountryIdByIso2Code($countryIso2Code);
         $storeId   = $this->getStoreIdByName($storeName);
@@ -70,15 +72,13 @@ class TableRateManager
                 ->filterByFkCountry($countryId)
                 ->filterByFkStore($storeId)
                 ->filterByZipCode_In($this->getZipCodes($zipCode))
+                ->filterByPrice($price, Criteria::LESS_EQUAL)
                 ->orderByZipCode(Criteria::DESC)
+                ->orderByPrice(Criteria::DESC)
                 ->findOne();
 
             if ($shipmentRate == null) {
                 throw new \Exception('Cannot get shipping price');
-            }
-
-            if ($shipmentRate->getFreeThreshold() && $price >= $shipmentRate->getFreeThreshold()) {
-                return 0;
             }
 
             return $shipmentRate->getPrice();

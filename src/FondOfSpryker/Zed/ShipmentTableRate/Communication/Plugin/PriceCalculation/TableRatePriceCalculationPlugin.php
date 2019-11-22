@@ -18,7 +18,7 @@ class TableRatePriceCalculationPlugin extends AbstractPlugin implements Shipment
      *
      * @return integer
      */
-    public function getPrice(QuoteTransfer $quoteTransfer): float
+    public function getPrice(QuoteTransfer $quoteTransfer): int
     {
         return $this
             ->getFacade()
