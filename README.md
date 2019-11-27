@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/fond-of-spryker/shipment-table-rate)
 
 
-This extension makes it possible to create and manage shipping table rates.
+This extension makes it possible to create and manage shipping table rates, based on country, zipCode, store and total
 
 ## Installation
 

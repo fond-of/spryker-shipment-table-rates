@@ -9,14 +9,12 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 interface ShipmentTableRateFacadeInterface
 {
     /**
-     * Retreieve Shipment Price
-     *
-     * @param float $price
+     * @param int $price
      * @param string $countryIso2Code
      * @param string $zipCode
      * @param string $storeName
      *
-     * @return float
+     * @return int
      */
-    public function getShipmentPrice(float $price, string $countryIso2Code, string $zipCode, string $storeName): float;
+    public function getShipmentPrice(int $price, string $countryIso2Code, string $zipCode, string $storeName): int;
 }
