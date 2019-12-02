@@ -54,8 +54,12 @@ class TableRateManager
      *
      * @return int
      */
-    public function getShipmentPrice(int $price, string $countryIso2Code, string $zipCode, string $storeName): int
-    {
+    public function getShipmentPrice(
+        int $price,
+        string $countryIso2Code,
+        string $zipCode,
+        string $storeName
+    ): int {
         $countryId = $this->getCountryIdByIso2Code($countryIso2Code);
         $storeId = $this->getStoreIdByName($storeName);
 
@@ -74,7 +78,7 @@ class TableRateManager
                 throw new Exception('Cannot get shipping price');
             }
 
-            return $shipmentRate->getPrice();
+            return $shipmentRate->getCost();
         } catch (AmbiguousComparisonException $e) {
             $this->getLogger()->error('Cannot get shipping price', ['trace' => $e]);
         }

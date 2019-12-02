@@ -15,7 +15,7 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->getCountryQueryContainer($container);
@@ -29,7 +29,7 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getCountryQueryContainer(Container $container)
+    protected function getCountryQueryContainer(Container $container): Container
     {
         $container[static::QUERY_CONTAINER_COUNTRY] = function (Container $container) {
             return $container->getLocator()->country()->queryContainer();
@@ -43,7 +43,7 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getStoreQueryContainer(Container $container)
+    protected function getStoreQueryContainer(Container $container): Container
     {
         $container[static::QUERY_CONTAINER_STORE] = function (Container $container) {
             return $container->getLocator()->store()->queryContainer();
