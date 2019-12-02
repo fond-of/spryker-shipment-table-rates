@@ -8,10 +8,8 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
-
 /**
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainerInterface getQueryContainer()
- * @method \FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateConfig getConfig()
  */
 class ShipmentTableRateBusinessFactory extends AbstractBusinessFactory
 {
@@ -28,6 +26,8 @@ class ShipmentTableRateBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @throws
+     *
      * @return \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected function getCountryQueryContainer(): CountryQueryContainerInterface
@@ -36,6 +36,8 @@ class ShipmentTableRateBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @throws
+     *
      * @return \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface
      */
     protected function getStoreQueryContainer(): StoreQueryContainerInterface

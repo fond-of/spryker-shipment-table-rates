@@ -8,6 +8,7 @@ use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
 
 /**
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateFacade getFacade()
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainerInterface getQueryContainer()
  */
 class TableRatePriceCalculationPlugin extends AbstractPlugin implements ShipmentMethodPricePluginInterface
 {
@@ -16,7 +17,9 @@ class TableRatePriceCalculationPlugin extends AbstractPlugin implements Shipment
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return integer
+     * @throws
+     *
+     * @return int
      */
     public function getPrice(QuoteTransfer $quoteTransfer): int
     {

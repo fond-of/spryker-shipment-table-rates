@@ -2,18 +2,16 @@
 
 namespace FondOfSpryker\Zed\ShipmentTableRate\Persistence;
 
-use FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainerInterface;
-use Orm\Zed\ShipmentTableRate\Persistence\FondOfSprykerShipmentTableRateQuery;
 use Orm\Zed\ShipmentTableRate\Persistence\FosShipmentTableRateQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmenTableRatePersistenceFactory getFactory()
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRatePersistenceFactory getFactory()
  */
 class ShipmentTableRateQueryContainer extends AbstractQueryContainer implements ShipmentTableRateQueryContainerInterface
 {
     /**
-     * @return \Orm\Zed\ShipmentTableRate\Persistence\FondOfSprykerShipmentTableRateQuery
+     * @return \Orm\Zed\ShipmentTableRate\Persistence\FosShipmentTableRateQuery
      */
     public function queryTableRate(): FosShipmentTableRateQuery
     {

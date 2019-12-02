@@ -7,8 +7,8 @@ use Spryker\Zed\Kernel\Container;
 
 class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
-    const QUERY_CONTAINER_STORE = 'QUERY_CONTAINER_STORE';
+    public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
+    public const QUERY_CONTAINER_STORE = 'QUERY_CONTAINER_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,7 +31,6 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function getCountryQueryContainer(Container $container)
     {
-
         $container[static::QUERY_CONTAINER_COUNTRY] = function (Container $container) {
             return $container->getLocator()->country()->queryContainer();
         };
@@ -52,17 +51,4 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return array
-     */
-    protected function getPricePlugins(Container $container)
-    {
-        return [
-            new TableRatePriceCalculationPlugin(),
-        ];
-    }
-
 }
