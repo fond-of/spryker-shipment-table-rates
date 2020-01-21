@@ -7,15 +7,15 @@ use Spryker\Zed\Kernel\Container;
 
 class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
-    const QUERY_CONTAINER_STORE = 'QUERY_CONTAINER_STORE';
+    public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
+    public const QUERY_CONTAINER_STORE = 'QUERY_CONTAINER_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->getCountryQueryContainer($container);
@@ -29,9 +29,8 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getCountryQueryContainer(Container $container)
+    protected function getCountryQueryContainer(Container $container): Container
     {
-
         $container[static::QUERY_CONTAINER_COUNTRY] = function (Container $container) {
             return $container->getLocator()->country()->queryContainer();
         };
@@ -44,7 +43,7 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getStoreQueryContainer(Container $container)
+    protected function getStoreQueryContainer(Container $container): Container
     {
         $container[static::QUERY_CONTAINER_STORE] = function (Container $container) {
             return $container->getLocator()->store()->queryContainer();
@@ -52,17 +51,4 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return array
-     */
-    protected function getPricePlugins(Container $container)
-    {
-        return [
-            new TableRatePriceCalculationPlugin(),
-        ];
-    }
-
 }

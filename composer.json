@@ -22,7 +22,6 @@
   ],
   "require": {
     "php": ">=7.1",
-    "fond-of-spryker/shipment-table-rate-data-import": "dev-spryker_upgrade",
     "spryker/kernel": "^3.37.5",
     "spryker/shipment": "^7.0.0"
   },
@@ -30,7 +29,7 @@
     "spryker/code-sniffer": "^0.14.7",
     "spryker/development": "^3.22",
     "codeception/codeception": "^2.5",
-    "mikey179/vfsStream": "^1.6",
+    "mikey179/vfsstream": "^1.6",
     "phpro/grumphp": "^0.14",
     "sebastian/phpcpd": "^4.1"
   },

@@ -5,8 +5,8 @@
 
     <table name="fos_shipment_table_rate" idMethod="native" allowPkInsert="true" phpName="FosShipmentTableRate">
         <column name="id_shipment_table_rate" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="free_threshold" required="false" type="INTEGER" defaultValue="NULL"/>
         <column name="price" required="true" type="INTEGER" defaultValue="0"/>
+        <column name="cost" required="true" type="INTEGER" defaultValue="0"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="zip_code" type="VARCHAR" size="255" required="false"/>
         <column name="fk_store" type="INTEGER" required="true"/>
