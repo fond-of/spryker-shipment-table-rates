@@ -26,8 +26,6 @@ class ShipmentTableRateBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected function getCountryQueryContainer(): CountryQueryContainerInterface
@@ -36,8 +34,6 @@ class ShipmentTableRateBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface
      */
     protected function getStoreQueryContainer(): StoreQueryContainerInterface

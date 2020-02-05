@@ -10,7 +10,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShipmentTableRateFacade extends AbstractFacade implements ShipmentTableRateFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -19,9 +19,9 @@ class ShipmentTableRateFacade extends AbstractFacade implements ShipmentTableRat
      * @param string $zipCode
      * @param string $storeName
      *
-     * @return int
-     *
      * @throws \Exception
+     *
+     * @return int
      */
     public function getShipmentPrice(
         int $price,
