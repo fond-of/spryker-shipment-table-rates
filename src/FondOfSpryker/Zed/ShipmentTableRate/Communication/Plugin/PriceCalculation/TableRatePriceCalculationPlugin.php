@@ -3,8 +3,9 @@
 namespace FondOfSpryker\Zed\ShipmentTableRate\Communication\Plugin\PriceCalculation;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface;
 
 /**
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateFacade getFacade()
@@ -13,21 +14,30 @@ use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface
 class TableRatePriceCalculationPlugin extends AbstractPlugin implements ShipmentMethodPricePluginInterface
 {
     /**
-     * Retrieve Shipment Price
+     * Specification:
+     *  - Returns shipment method price for shipment group.
      *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
-    public function getPrice(QuoteTransfer $quoteTransfer): int
+    public function getPrice(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): int
     {
-        return $this
-            ->getFacade()
-            ->getShipmentPrice(
-                $quoteTransfer->getTotals()->getPriceToPay(),
-                $quoteTransfer->getShippingAddress()->getIso2Code(),
-                $quoteTransfer->getShippingAddress()->getZipCode(),
-                $quoteTransfer->getStore()->getName()
-            );
+        foreach ($quoteTransfer->getItems() as $item) {
+            $shipment = $item->getShipment();
+            return $this
+                ->getFacade()
+                ->getShipmentPrice(
+                    $quoteTransfer->getTotals()->getPriceToPay(),
+                    $shipment->getShippingAddress()->getIso2Code(),
+                    $shipment->getShippingAddress()->getZipCode(),
+                    $quoteTransfer->getStore()->getName()
+                );
+        }
+
+        return 0;
     }
 }
