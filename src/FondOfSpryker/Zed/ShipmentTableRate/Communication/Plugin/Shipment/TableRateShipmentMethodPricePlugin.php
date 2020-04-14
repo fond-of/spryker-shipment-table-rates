@@ -1,17 +1,12 @@
 <?php
 
-namespace FondOfSpryker\Zed\ShipmentTableRate\Communication\Plugin\PriceCalculation;
+namespace FondOfSpryker\Zed\ShipmentTableRate\Communication\Plugin\Shipment;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface;
+use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface;
 
-/**
- * @method \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateFacade getFacade()
- * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainerInterface getQueryContainer()
- */
-class TableRatePriceCalculationPlugin extends AbstractPlugin implements ShipmentMethodPricePluginInterface
+class TableRateShipmentMethodPricePlugin extends AbstractPlugin implements ShipmentMethodPricePluginInterface
 {
     /**
      * Specification:
@@ -19,15 +14,15 @@ class TableRatePriceCalculationPlugin extends AbstractPlugin implements Shipment
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
-    public function getPrice(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): int
+    public function getPrice(QuoteTransfer $quoteTransfer): int
     {
         foreach ($quoteTransfer->getItems() as $item) {
             $shipment = $item->getShipment();
+
             return $this
                 ->getFacade()
                 ->getShipmentPrice(

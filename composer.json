@@ -21,9 +21,9 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
-    "spryker/kernel": "^3.42.4",
-    "spryker/shipment": "^8.0.2"
+    "php": ">=7.1",
+    "spryker/shipment": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/shipment-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.14.7",
