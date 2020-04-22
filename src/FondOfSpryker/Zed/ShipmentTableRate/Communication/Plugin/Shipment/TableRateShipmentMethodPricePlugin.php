@@ -6,6 +6,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface;
 
+/**
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainerInterface getQueryContainer()
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateFacadeInterface getFacade()
+ */
 class TableRateShipmentMethodPricePlugin extends AbstractPlugin implements ShipmentMethodPricePluginInterface
 {
     /**
@@ -22,6 +26,10 @@ class TableRateShipmentMethodPricePlugin extends AbstractPlugin implements Shipm
     {
         foreach ($quoteTransfer->getItems() as $item) {
             $shipment = $item->getShipment();
+
+            if ($shipment === null || $shipment->getShippingAddress() === null) {
+                return 0;
+            }
 
             return $this
                 ->getFacade()

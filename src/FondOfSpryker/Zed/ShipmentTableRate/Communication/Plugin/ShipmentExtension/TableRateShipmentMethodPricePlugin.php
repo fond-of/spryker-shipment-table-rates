@@ -29,6 +29,10 @@ class TableRateShipmentMethodPricePlugin extends AbstractPlugin implements Shipm
         foreach ($quoteTransfer->getItems() as $item) {
             $shipment = $item->getShipment();
 
+            if ($shipment === null || $shipment->getShippingAddress() === null) {
+                return 0;
+            }
+
             return $this
                 ->getFacade()
                 ->getShipmentPrice(
