@@ -17,8 +17,6 @@ class TableRatePriceCalculationPlugin extends AbstractPlugin implements Shipment
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @throws
-     *
      * @return int
      */
     public function getPrice(QuoteTransfer $quoteTransfer): int

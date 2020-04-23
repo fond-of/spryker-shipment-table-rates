@@ -31,7 +31,7 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function getCountryQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_COUNTRY] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_COUNTRY] = static function (Container $container) {
             return $container->getLocator()->country()->queryContainer();
         };
 
@@ -45,7 +45,7 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function getStoreQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_STORE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_STORE] = static function (Container $container) {
             return $container->getLocator()->store()->queryContainer();
         };
 
