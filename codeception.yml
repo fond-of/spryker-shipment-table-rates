@@ -1,4 +1,4 @@
-namespace: FondOfSpryker
+namespace: fond-of-spryker/shipment-table-rate
 suites:
   unit:
     path: .
