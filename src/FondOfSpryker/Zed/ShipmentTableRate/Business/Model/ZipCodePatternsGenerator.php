@@ -15,9 +15,8 @@ class ZipCodePatternsGenerator implements ZipCodePatternsGeneratorInterface
         $zipCodePattern = $zipCode;
 
         while ($zipCodePattern !== '') {
-            $zipCodePattern = substr_replace($zipCodePattern, '*', strlen($zipCodePattern) - 1);
-            $zipCodePatterns[] = $zipCodePattern;
             $zipCodePattern = substr($zipCodePattern, 0, -1);
+            $zipCodePatterns[] = str_pad($zipCodePattern, strlen($zipCodePattern) + 1, '*', STR_PAD_RIGHT);
         }
 
         return $zipCodePatterns;
