@@ -5,5 +5,20 @@
     <transfer name="Totals">
         <property name="priceToPay" type="int"/>
     </transfer>
+
+    <transfer name="ShipmentTableRate">
+        <property name="idShipmentTableRate" type="int"/>
+        <property name="price" type="int"/>
+        <property name="cost" type="int"/>
+        <property name="fkCountry" type="int"/>
+        <property name="fkStore" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentTableRateCriteriaFilter">
+        <property name="zipCodes" type="int[]" singular="zipCode"/>
+        <property name="price" type="int"/>
+        <property name="fkCountry" type="int"/>
+        <property name="fkStore" type="int"/>
+    </transfer>
 </transfers>
 

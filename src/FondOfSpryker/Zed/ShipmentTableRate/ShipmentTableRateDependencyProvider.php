@@ -2,13 +2,15 @@
 
 namespace FondOfSpryker\Zed\ShipmentTableRate;
 
+use FondOfSpryker\Zed\ShipmentTableRate\Dependency\Facade\ShipmentTableRateToCountryFacadeBridge;
+use FondOfSpryker\Zed\ShipmentTableRate\Dependency\Facade\ShipmentTableRateToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
-    public const QUERY_CONTAINER_STORE = 'QUERY_CONTAINER_STORE';
+    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -18,8 +20,9 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->getCountryQueryContainer($container);
-        $container = $this->getStoreQueryContainer($container);
+
+        $container = $this->addCountryFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -29,10 +32,10 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getCountryQueryContainer(Container $container): Container
+    protected function addCountryFacade(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_COUNTRY] = static function (Container $container) {
-            return $container->getLocator()->country()->queryContainer();
+        $container[static::FACADE_COUNTRY] = static function (Container $container) {
+            return new ShipmentTableRateToCountryFacadeBridge($container->getLocator()->country()->facade());
         };
 
         return $container;
@@ -43,10 +46,10 @@ class ShipmentTableRateDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getStoreQueryContainer(Container $container): Container
+    protected function addStoreFacade(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_STORE] = static function (Container $container) {
-            return $container->getLocator()->store()->queryContainer();
+        $container[static::FACADE_STORE] = static function (Container $container) {
+            return new ShipmentTableRateToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;
