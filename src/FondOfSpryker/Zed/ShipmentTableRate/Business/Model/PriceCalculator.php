@@ -53,10 +53,10 @@ class PriceCalculator implements PriceCalculatorInterface
             $quoteTransfer
         );
 
-        if ($shipmentTableRateTransfer === null || $shipmentTableRateTransfer->getCost() === null) {
+        if ($shipmentTableRateTransfer === null || $shipmentTableRateTransfer->getPrice() === null) {
             return $this->shipmentTableRateConfig->getFallbackPrice();
         }
 
-        return $shipmentTableRateTransfer->getCost();
+        return $shipmentTableRateTransfer->getPrice();
     }
 }

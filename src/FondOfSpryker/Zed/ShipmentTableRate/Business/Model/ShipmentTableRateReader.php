@@ -111,7 +111,7 @@ class ShipmentTableRateReader implements ShipmentTableRateReaderInterface
         return (new ShipmentTableRateCriteriaFilterTransfer())
             ->setFkCountry($countryTransfer->getIdCountry())
             ->setFkStore($storeTransfer->getIdStore())
-            ->setPrice($priceToPay)
-            ->setZipCodes($this->zipCodePatternsGenerator->generateFromZipCode($zipCode));
+            ->setPriceToPay($priceToPay)
+            ->setZipCodePatterns($this->zipCodePatternsGenerator->generateFromZipCode($zipCode));
     }
 }

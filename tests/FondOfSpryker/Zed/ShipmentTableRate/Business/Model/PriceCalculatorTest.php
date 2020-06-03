@@ -89,7 +89,7 @@ class PriceCalculatorTest extends Unit
      */
     public function testCalculate(): void
     {
-        $cost = 495;
+        $expectedPrice = 495;
 
         $this->quoteTransferMock->expects($this->atLeastOnce())
             ->method('getShipment')
@@ -108,12 +108,12 @@ class PriceCalculatorTest extends Unit
             ->willReturn($this->shipmentTableRateTransferMock);
 
         $this->shipmentTableRateTransferMock->expects($this->atLeastOnce())
-            ->method('getCost')
-            ->willReturn($cost);
+            ->method('getPrice')
+            ->willReturn($expectedPrice);
 
         $price = $this->priceCalculator->calculate($this->quoteTransferMock, $this->shipmentGroupTransferMock);
 
-        $this->assertEquals($cost, $price);
+        $this->assertEquals($expectedPrice, $price);
     }
 
     /**
@@ -121,7 +121,7 @@ class PriceCalculatorTest extends Unit
      */
     public function testCalculateWithoutShipmentGroup(): void
     {
-        $cost = 495;
+        $expectedPrice = 495;
 
         $this->quoteTransferMock->expects($this->atLeastOnce())
             ->method('getShipment')
@@ -136,12 +136,12 @@ class PriceCalculatorTest extends Unit
             ->willReturn($this->shipmentTableRateTransferMock);
 
         $this->shipmentTableRateTransferMock->expects($this->atLeastOnce())
-            ->method('getCost')
-            ->willReturn($cost);
+            ->method('getPrice')
+            ->willReturn($expectedPrice);
 
         $price = $this->priceCalculator->calculate($this->quoteTransferMock, null);
 
-        $this->assertEquals($cost, $price);
+        $this->assertEquals($expectedPrice, $price);
     }
 
     /**
@@ -165,7 +165,7 @@ class PriceCalculatorTest extends Unit
             ->method('getByShipmentAndQuote');
 
         $this->shipmentTableRateTransferMock->expects($this->never())
-            ->method('getCost');
+            ->method('getPrice');
 
         $price = $this->priceCalculator->calculate($this->quoteTransferMock, $this->shipmentGroupTransferMock);
 
@@ -195,7 +195,7 @@ class PriceCalculatorTest extends Unit
             ->willReturn(ShipmentTableRateConstants::FALLBACK_PRICE_DEFAULT_VALUE);
 
         $this->shipmentTableRateTransferMock->expects($this->never())
-            ->method('getCost');
+            ->method('getPrice');
 
         $price = $this->priceCalculator->calculate($this->quoteTransferMock, $this->shipmentGroupTransferMock);
 

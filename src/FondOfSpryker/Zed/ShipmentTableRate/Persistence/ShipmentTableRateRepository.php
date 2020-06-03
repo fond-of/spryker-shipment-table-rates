@@ -28,7 +28,7 @@ class ShipmentTableRateRepository extends AbstractRepository implements Shipment
             $shipmentTableRateCriteriaFilterTransfer
         );
 
-        $shipmentTableRate = $shipmentTableRateQuery->orderByZipCode(Criteria::DESC)
+        $shipmentTableRate = $shipmentTableRateQuery->orderByZipCodePattern(Criteria::DESC)
             ->orderByPrice(Criteria::DESC)
             ->findOne();
 
@@ -52,8 +52,8 @@ class ShipmentTableRateRepository extends AbstractRepository implements Shipment
         FosShipmentTableRateQuery $shipmentTableRateQuery,
         ShipmentTableRateCriteriaFilterTransfer $shipmentTableRateCriteriaFilterTransfer
     ): FosShipmentTableRateQuery {
-        if ($shipmentTableRateCriteriaFilterTransfer->getZipCodes()) {
-            $shipmentTableRateQuery->filterByZipCode_In($shipmentTableRateCriteriaFilterTransfer->getZipCodes());
+        if ($shipmentTableRateCriteriaFilterTransfer->getZipCodePatterns()) {
+            $shipmentTableRateQuery->filterByZipCodePattern_In($shipmentTableRateCriteriaFilterTransfer->getZipCodePatterns());
         }
 
         if ($shipmentTableRateCriteriaFilterTransfer->getFkCountry()) {
@@ -64,8 +64,8 @@ class ShipmentTableRateRepository extends AbstractRepository implements Shipment
             $shipmentTableRateQuery->filterByFkStore($shipmentTableRateCriteriaFilterTransfer->getFkStore());
         }
 
-        if ($shipmentTableRateCriteriaFilterTransfer->getPrice()) {
-            $shipmentTableRateQuery->filterByPrice($shipmentTableRateCriteriaFilterTransfer->getPrice(), Criteria::LESS_EQUAL);
+        if ($shipmentTableRateCriteriaFilterTransfer->getPriceToPay()) {
+            $shipmentTableRateQuery->filterByMinPriceToPay($shipmentTableRateCriteriaFilterTransfer->getPriceToPay(), Criteria::LESS_EQUAL);
         }
 
         return $shipmentTableRateQuery;
