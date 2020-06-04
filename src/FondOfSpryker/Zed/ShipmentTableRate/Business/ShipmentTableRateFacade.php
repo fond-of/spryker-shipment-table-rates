@@ -7,6 +7,7 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateConfig getConfig()
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateBusinessFactory getFactory()
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateRepositoryInterface getRepository()
  */
@@ -18,7 +19,7 @@ class ShipmentTableRateFacade extends AbstractFacade implements ShipmentTableRat
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer|null
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return int
      */

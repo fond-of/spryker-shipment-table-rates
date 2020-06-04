@@ -9,6 +9,7 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInt
 
 /**
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateConfig getConfig()
  */
 class TableRateShipmentMethodPricePlugin extends AbstractPlugin implements ShipmentMethodPricePluginInterface
 {

@@ -9,6 +9,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateRepositoryInterface getRepository()
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateConfig getConfig()()
  */
 class ShipmentTableRatePersistenceFactory extends AbstractPersistenceFactory
 {
