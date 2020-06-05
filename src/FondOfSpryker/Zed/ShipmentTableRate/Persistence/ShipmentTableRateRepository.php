@@ -29,7 +29,7 @@ class ShipmentTableRateRepository extends AbstractRepository implements Shipment
         );
 
         $shipmentTableRate = $shipmentTableRateQuery->orderByZipCodePattern(Criteria::DESC)
-            ->orderByPrice(Criteria::DESC)
+            ->orderByPrice(Criteria::ASC)
             ->findOne();
 
         if ($shipmentTableRate === null) {
