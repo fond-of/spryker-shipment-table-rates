@@ -3,44 +3,36 @@
 namespace FondOfSpryker\Zed\ShipmentTableRate\Business;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\ShipmentTableRate\Business\Model\TableRateManager;
+use FondOfSpryker\Zed\ShipmentTableRate\Business\Model\PriceCalculatorInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 class ShipmentTableRateFacadeTest extends Unit
 {
-    /**
-     * @var \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateFacade
-     */
-    protected $shipmentTableRateFacade;
-
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateBusinessFactory
      */
     protected $shipmentTableRateBusinessFactoryMock;
 
     /**
-     * @var int
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\QuoteTransfer
      */
-    protected $price;
+    protected $quoteTransferMock;
 
     /**
-     * @var string
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected $countryIso2Code;
+    protected $shipmentGroupTransferMock;
 
     /**
-     * @var string
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\Business\Model\PriceCalculatorInterface
      */
-    protected $zipCode;
+    protected $priceCalculatorMock;
 
     /**
-     * @var string
+     * @var \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateFacade
      */
-    protected $storeName;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\Business\Model\TableRateManager
-     */
-    protected $tableRateManagerMock;
+    protected $shipmentTableRateFacade;
 
     /**
      * @return void
@@ -51,15 +43,15 @@ class ShipmentTableRateFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->price = 1;
+        $this->quoteTransferMock = $this->getMockBuilder(QuoteTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->countryIso2Code = 'country-iso-2-code';
+        $this->shipmentGroupTransferMock = $this->getMockBuilder(ShipmentGroupTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->zipCode = 'zip-code';
-
-        $this->storeName = 'store-name';
-
-        $this->tableRateManagerMock = $this->getMockBuilder(TableRateManager::class)
+        $this->priceCalculatorMock = $this->getMockBuilder(PriceCalculatorInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -70,27 +62,26 @@ class ShipmentTableRateFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetShipmentPrice(): void
+    public function testCalculatePrice(): void
     {
+        $price = 495;
+
         $this->shipmentTableRateBusinessFactoryMock->expects($this->atLeastOnce())
-            ->method('createTableRateManager')
-            ->willReturn($this->tableRateManagerMock);
+            ->method('createPriceCalculator')
+            ->willReturn($this->priceCalculatorMock);
 
-        $this->tableRateManagerMock->expects($this->atLeastOnce())
-            ->method('getShipmentPrice')
+        $this->priceCalculatorMock->expects($this->atLeastOnce())
+            ->method('calculate')
             ->with(
-                $this->price,
-                $this->countryIso2Code,
-                $this->zipCode,
-                $this->storeName
-            )->willReturn($this->price);
+                $this->quoteTransferMock,
+                $this->shipmentGroupTransferMock
+            )->willReturn($price);
 
-        $this->assertIsInt(
-            $this->shipmentTableRateFacade->getShipmentPrice(
-                $this->price,
-                $this->countryIso2Code,
-                $this->zipCode,
-                $this->storeName
+        $this->assertEquals(
+            $price,
+            $this->shipmentTableRateFacade->calculatePrice(
+                $this->quoteTransferMock,
+                $this->shipmentGroupTransferMock
             )
         );
     }

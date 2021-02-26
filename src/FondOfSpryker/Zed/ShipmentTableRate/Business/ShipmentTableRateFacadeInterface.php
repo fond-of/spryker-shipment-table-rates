@@ -2,25 +2,24 @@
 
 namespace FondOfSpryker\Zed\ShipmentTableRate\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+
 interface ShipmentTableRateFacadeInterface
 {
     /**
      * Specifications:
-     * - Retrieves shipping price by table rates
+     * - Calculates price by shipment table rate
      *
      * @api
      *
-     * @param int $price
-     * @param string $countryIso2Code
-     * @param string $zipCode
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return int
      */
-    public function getShipmentPrice(
-        int $price,
-        string $countryIso2Code,
-        string $zipCode,
-        string $storeName
+    public function calculatePrice(
+        QuoteTransfer $quoteTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer = null
     ): int;
 }

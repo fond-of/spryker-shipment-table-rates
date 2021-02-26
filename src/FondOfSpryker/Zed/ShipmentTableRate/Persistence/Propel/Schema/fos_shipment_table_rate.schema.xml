@@ -5,10 +5,10 @@
 
     <table name="fos_shipment_table_rate" idMethod="native" allowPkInsert="true" phpName="FosShipmentTableRate">
         <column name="id_shipment_table_rate" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="min_price_to_pay" required="true" type="INTEGER" defaultValue="0"/>
         <column name="price" required="true" type="INTEGER" defaultValue="0"/>
-        <column name="cost" required="true" type="INTEGER" defaultValue="0"/>
         <column name="fk_country" type="INTEGER" required="true"/>
-        <column name="zip_code" type="VARCHAR" size="255" required="false"/>
+        <column name="zip_code_pattern" type="VARCHAR" size="255" required="false"/>
         <column name="fk_store" type="INTEGER" required="true"/>
 
         <foreign-key name="fos_shipment_table_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="FosShipmentTableRate">

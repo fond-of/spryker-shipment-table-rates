@@ -2,35 +2,33 @@
 
 namespace FondOfSpryker\Zed\ShipmentTableRate\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateConfig getConfig()
  * @method \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateBusinessFactory getFactory()
+ * @method \FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateRepositoryInterface getRepository()
  */
 class ShipmentTableRateFacade extends AbstractFacade implements ShipmentTableRateFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param int $price
-     * @param string $countryIso2Code
-     * @param string $zipCode
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
      * @return int
-     *
-     * @throws \Exception
      */
-    public function getShipmentPrice(
-        int $price,
-        string $countryIso2Code,
-        string $zipCode,
-        string $storeName
+    public function calculatePrice(
+        QuoteTransfer $quoteTransfer,
+        ?ShipmentGroupTransfer $shipmentGroupTransfer = null
     ): int {
         return $this->getFactory()
-            ->createTableRateManager()
-            ->getShipmentPrice($price, $countryIso2Code, $zipCode, $storeName);
+            ->createPriceCalculator()
+            ->calculate($quoteTransfer, $shipmentGroupTransfer);
     }
 }

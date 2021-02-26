@@ -3,39 +3,45 @@
 namespace FondOfSpryker\Zed\ShipmentTableRate\Business;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\ShipmentTableRate\Business\Model\TableRateManager;
-use FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainer;
+use FondOfSpryker\Zed\ShipmentTableRate\Business\Model\PriceCalculator;
+use FondOfSpryker\Zed\ShipmentTableRate\Dependency\Facade\ShipmentTableRateToCountryFacadeInterface;
+use FondOfSpryker\Zed\ShipmentTableRate\Dependency\Facade\ShipmentTableRateToStoreFacadeInterface;
+use FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateRepository;
+use FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateConfig;
 use FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateDependencyProvider;
-use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class ShipmentTableRateBusinessFactoryTest extends Unit
 {
-    /**
-     * @var \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateBusinessFactory
-     */
-    protected $shipmentTableRateBusinessFactory;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateQueryContainer
-     */
-    protected $shipmentTableRateQueryContainerMock;
-
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Container
      */
     protected $containerMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\Persistence\ShipmentTableRateRepository
      */
-    protected $countryQueryContainerInterfaceMock;
+    protected $shipmentTableRateRepositoryMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Store\Persistence\StoreQueryContainerInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\ShipmentTableRateConfig
      */
-    protected $storeQueryContainerInterfaceMock;
+    protected $shipmentTableRateConfigMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\Dependency\Facade\ShipmentTableRateToStoreFacadeInterface
+     */
+    protected $storeFacadeMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\ShipmentTableRate\Dependency\Facade\ShipmentTableRateToCountryFacadeInterface
+     */
+    protected $countryFacadeMock;
+
+    /**
+     * @var \FondOfSpryker\Zed\ShipmentTableRate\Business\ShipmentTableRateBusinessFactory
+     */
+    protected $shipmentTableRateBusinessFactory;
 
     /**
      * @return void
@@ -46,27 +52,32 @@ class ShipmentTableRateBusinessFactoryTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->shipmentTableRateQueryContainerMock = $this->getMockBuilder(ShipmentTableRateQueryContainer::class)
+        $this->shipmentTableRateRepositoryMock = $this->getMockBuilder(ShipmentTableRateRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->countryQueryContainerInterfaceMock = $this->getMockBuilder(CountryQueryContainerInterface::class)
+        $this->shipmentTableRateConfigMock = $this->getMockBuilder(ShipmentTableRateConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->storeQueryContainerInterfaceMock = $this->getMockBuilder(StoreQueryContainerInterface::class)
+        $this->storeFacadeMock = $this->getMockBuilder(ShipmentTableRateToStoreFacadeInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->countryFacadeMock = $this->getMockBuilder(ShipmentTableRateToCountryFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->shipmentTableRateBusinessFactory = new ShipmentTableRateBusinessFactory();
-        $this->shipmentTableRateBusinessFactory->setQueryContainer($this->shipmentTableRateQueryContainerMock);
+        $this->shipmentTableRateBusinessFactory->setRepository($this->shipmentTableRateRepositoryMock);
         $this->shipmentTableRateBusinessFactory->setContainer($this->containerMock);
+        $this->shipmentTableRateBusinessFactory->setConfig($this->shipmentTableRateConfigMock);
     }
 
     /**
      * @return void
      */
-    public function testCreateTableRateManager(): void
+    public function testCreatePriceCalculator(): void
     {
         $this->containerMock->expects($this->atLeastOnce())
             ->method('has')
@@ -75,16 +86,16 @@ class ShipmentTableRateBusinessFactoryTest extends Unit
         $this->containerMock->expects($this->atLeastOnce())
             ->method('get')
             ->withConsecutive(
-                [ShipmentTableRateDependencyProvider::QUERY_CONTAINER_COUNTRY],
-                [ShipmentTableRateDependencyProvider::QUERY_CONTAINER_STORE]
+                [ShipmentTableRateDependencyProvider::FACADE_COUNTRY],
+                [ShipmentTableRateDependencyProvider::FACADE_STORE]
             )->willReturnOnConsecutiveCalls(
-                $this->countryQueryContainerInterfaceMock,
-                $this->storeQueryContainerInterfaceMock
+                $this->countryFacadeMock,
+                $this->storeFacadeMock
             );
 
         $this->assertInstanceOf(
-            TableRateManager::class,
-            $this->shipmentTableRateBusinessFactory->createTableRateManager()
+            PriceCalculator::class,
+            $this->shipmentTableRateBusinessFactory->createPriceCalculator()
         );
     }
 }
